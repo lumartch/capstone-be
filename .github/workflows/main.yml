@@ -33,6 +33,4 @@ jobs:
     - name: Build
       run: |
         npm ci
-        npm build
-  call-workflow:
-    uses: ./.github/workflows/deployment.yml
+        npm run build
