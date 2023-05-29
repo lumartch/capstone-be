@@ -1,29 +1,30 @@
-name: Deploy to Railway
+name: Main pipeline for Capstone
 
 on:
   push:
-    branches: [main]
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        node-version: [14.x, 16.x, 18.x]
+
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
-      - name: Use Node 18
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18.x
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
 
-      - name: Install packages
-        run: npm ci
-
-      - name: Install Railway
-        run: npm i -g @railway/cli
-
-      - name: Deploy
-        run: railway up
-        env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+    - name: Build
+      run: |
+        npm ci
+        npm build
+  call-workflow:
+    uses: ./.github/workflows/deployment.yml
