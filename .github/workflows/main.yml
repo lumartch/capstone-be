@@ -12,26 +12,14 @@ on:
           type: string
 
 jobs:
+  testing:
+    uses: ./.github/workflows/testing.yml
+    secrets: inherit
+
   build:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-  
-      - name: Use Node 18
-        uses: actions/setup-node@v3
-        with:
-            node-version: 18.x
-  
-      - name: Install packages
-        run: npm ci
-
-      - name: Install build
-        run: npm run build
-
-      - name: Unit testing
-        run: npm test
+    uses: ./.github/workflows/build.yml
+    secrets: inherit
+    needs: [testing]
 
   deployment:
     uses: ./.github/workflows/deployment.yml
