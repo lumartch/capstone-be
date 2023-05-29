@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { IProduct } from "../models/Types";
 import { ProductService } from "../services/ProductService"
 
 export const ProductConstroller = () => {
