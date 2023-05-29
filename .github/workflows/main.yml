@@ -26,4 +26,4 @@ jobs:
       - name: Deploy
         run: railway up
         env:
-          PRODUCTION_TOKEN: ${{ secrets.PROD_TOKEN }}
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
