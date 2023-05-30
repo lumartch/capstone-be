@@ -21,5 +21,13 @@ export const ProductService = () => {
         return await newProduct.save();
     }
 
-    return { findAllProducts, findProductById, createProduct };
+    const updateProduct = async (id: string, product: IProduct) => {
+        return await ProductModel.findByIdAndUpdate(id, product, { new: true } ).lean().exec();
+    }
+    
+    const deleteProduct = async (id: string) => {
+        return await ProductModel.findByIdAndDelete(id).lean().exec();
+    }
+
+    return { findAllProducts, findProductById, createProduct, updateProduct, deleteProduct };
 }

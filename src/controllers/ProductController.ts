@@ -53,7 +53,44 @@ export const ProductConstroller = () => {
         }
     }
 
+    const updateProduct = async (req: Request, res: Response) => {
+        const { id } = req.params;
+        if(!isIdValid(id)){
+            res.status(400).json({
+                message: "Argument passed in must be a string of 12 bytes or a string of 24 hex characters or an integer.",
+            });
+            return;
+        }
+        const projectData = req.body;
+        try {
+            const updatedProjecData = await productService.updateProduct(id, projectData);
+            res.status(200).json(updatedProjecData);
+        } catch (e) {
+            console.error("Error: ", e);
+            res.status(500).json({
+                message: "Internal error",
+            });
+        }
+    }
+
+    const deleteProduct = async (req: Request, res: Response) => {
+        const { id } = req.params;
+        if(!isIdValid(id)){
+            res.status(400).json({
+                message: "Argument passed in must be a string of 12 bytes or a string of 24 hex characters or an integer.",
+            });
+            return;
+        }
+        try {
+            await productService.deleteProduct(id);
+            res.status(204).json();
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ message: "Internal error" });
+        }
+    }
+
     const isIdValid = (id: string) => id.match(/^[0-9a-fA-F]{24}$/);
 
-    return { findAllProducts, findProductById, createProduct };
+    return { findAllProducts, findProductById, createProduct, updateProduct, deleteProduct };
 }
