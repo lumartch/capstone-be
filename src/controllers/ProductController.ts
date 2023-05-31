@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import { ProductService } from "../services/ProductService"
+import ProductService from "../services/ProductService";
 
-export const ProductConstroller = () => {
+const ProductConstroller = () => {
     const productService = ProductService();
     
     const findAllProducts = async (req: Request, res: Response) => {
@@ -94,3 +94,5 @@ export const ProductConstroller = () => {
 
     return { findAllProducts, findProductById, createProduct, updateProduct, deleteProduct };
 }
+
+export default ProductConstroller;

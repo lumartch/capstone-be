@@ -1,7 +1,7 @@
 import { ProductModel } from "../models/ProductModel"
 import { IProduct } from "../models/Types";
 
-export const ProductService = () => {
+const ProductService = () => {
 
     const findAllProducts = async () => {
         return ProductModel.find().lean().exec();
@@ -31,3 +31,5 @@ export const ProductService = () => {
 
     return { findAllProducts, findProductById, createProduct, updateProduct, deleteProduct };
 }
+
+export default ProductService;
